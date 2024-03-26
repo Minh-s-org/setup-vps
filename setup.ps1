@@ -8,7 +8,7 @@ reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUn
 
 Write-Host "Installing MysteriumVPN..."
 curl https://github.com/mysteriumnetwork/mysterium-vpn-release/releases/download/v1.5.5/MysteriumVPN.msix -OutFile ./MysteriumVPN.msix
-Add-AppPackage -Path ./MysteriumVPN.msix
+Add-AppPackage -Path .\MysteriumVPN.msix
 Write-Host "Try to login and start VPN while installing other packages"
 
 Write-Host "Installing chocolatey..."
@@ -31,7 +31,10 @@ Write-Host "Installing 7z..."
 choco install 7zip.install -y
 refreshenv
 
-7z e -p"$pass" "id.zip" -o".\"
+git clone https://github.com/Minh-s-org/setup-vps.git
+cp ".\setup-vps\Mysterium VPN.lnk" ~\Desktop
+cp ".\setup-vps\setup-vps" ~\
+7z e -p"$pass" "ssh.zip" -o".\"
 
 Write-Host "Installing SSH..."
 Add-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0
