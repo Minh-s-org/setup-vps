@@ -16,19 +16,19 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManage
 Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1
 
 Write-Host "Installing git..."
-choco install git.install -y
+choco install git.install -y --force
 refreshenv
 
 Write-Host "Installing python..."
-choco install python312 --pre -y
+choco install python312 --pre -y --force
 refreshenv
 
 Write-Host "Installing tesseract..."
-choco install tesseract -y
+choco install tesseract -y --force
 refreshenv
 
 Write-Host "Installing 7z..."
-choco install 7zip.install -y
+choco install 7zip.install -y --force
 refreshenv
 
 git clone https://github.com/Minh-s-org/setup-vps.git
