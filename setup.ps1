@@ -34,7 +34,7 @@ refreshenv
 git clone https://github.com/Minh-s-org/setup-vps.git
 cp ".\setup-vps\Mysterium VPN.lnk" ~\Desktop
 cp ".\setup-vps\ssh.zip" ~\
-7z e -p"$pass" "ssh.zip" -o".\"
+7z e -p"$pass" "ssh.zip" -o".\.ssh"
 
 Write-Host "Installing SSH..."
 Add-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0
