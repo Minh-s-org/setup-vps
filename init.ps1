@@ -6,3 +6,5 @@ Write-Host "Installed chocolatey"
 Write-Host "Installing Git..."
 choco install -y git
 Write-Host "Installed Git..."
+
+Start-Process powershell.exe -ArgumentList "-Command", "& 'git clone https://github.com/Minh-s-org/setup-vps.git' " -PassThru
