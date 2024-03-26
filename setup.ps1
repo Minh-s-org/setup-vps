@@ -20,11 +20,11 @@ choco install git.install -y --force
 refreshenv
 
 Write-Host "Installing python..."
-choco install python312 --pre -y --force
+choco install python312 --pre -y
 refreshenv
 
 Write-Host "Installing tesseract..."
-choco install tesseract -y --force
+choco install tesseract -y
 refreshenv
 
 Write-Host "Installing 7z..."
