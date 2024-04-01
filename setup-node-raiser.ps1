@@ -19,21 +19,10 @@ choco install 7zip.install -y --force
 refreshenv
 
 git clone https://github.com/Minh-s-org/setup-vps.git
-cp ".\setup-vps\Mysterium VPN.lnk" ~\Desktop
-cp ".\setup-vps\setup-vps" ~\
-7z e -p"$pass" "ssh.zip" -o".\"
 
-Write-Host "Installing SSH..."
-Add-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0
-Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
-Set-Service ssh-agent -StartupType Manual
-Start-Service ssh-agent
-Set-Service ssh-agent -StartupType Automatic
-ssh-add .\.ssh\.id_rsa
+Set-Location .\setup-vps
+.\setup-ssh-server.ps1
 
-Set-Location .\Desktop
-git clone git@github.com:Minh-s-org/node-raiser.git
-
-Set-Location .\node-raiser
+.\setup-vps-pass.ps1
 
 Write-Host "Node raiser already"
