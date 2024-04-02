@@ -20,9 +20,15 @@ refreshenv
 
 git clone https://github.com/Minh-s-org/setup-vps.git
 
+Write-Host "Preparing VPS..."
 Set-Location .\setup-vps
 .\setup-ssh-server.ps1
 
 .\setup-vps-pass.ps1
 
-Write-Host "Node raiser already"
+Write-Host "Installing Myst Launcher-x64..."
+Set-Location ~
+curl https://github.com/mysteriumnetwork/myst-launcher/releases/latest/download/myst-launcher-x64.msi  -OutFile ./myst-launcher-x64.msi
+Start-Process msiexec.exe -Wait -ArgumentList '/I .\myst-launcher-x64.msi /quiet'
+
+Write-Host "Node raiser already. Onboarding now at http://localhost:4449"
