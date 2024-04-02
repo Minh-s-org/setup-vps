@@ -6,7 +6,7 @@ Dism Online Add-Package PackagePath: "C:\OpenSSH-Server-Package~31bf3856ad364e35
 
 Remove-Item "C:\OpenSSH-Server-Package~31bf3856ad364e35~amd64~~.cab" -Force
 
-New-NetFirewallRule -Protocol TCP -LocalPort 22 -Direction Inbound -Action Allow -DisplayName SSH 
+New-NetFirewallRule -Protocol TCP -LocalPort 22 -Direction Inbound -Action Allow -DisplayName SSH
 
 Start-Service -Name sshd
 
