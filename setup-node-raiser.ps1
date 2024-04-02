@@ -29,6 +29,6 @@ Set-Location .\setup-vps
 Write-Host "Installing Myst Launcher-x64..."
 Set-Location ~
 curl https://github.com/mysteriumnetwork/myst-launcher/releases/latest/download/myst-launcher-x64.msi  -OutFile ./myst-launcher-x64.msi
-Start-Process msiexec.exe -Wait -ArgumentList '/I .\myst-launcher-x64.msi /quiet'
+Start-Process msiexec.exe -Wait -ArgumentList "/I $env:USERPROFILE\myst-launcher-x64.msi"
 
 Write-Host "Node raiser already. Onboarding now at http://localhost:4449"
