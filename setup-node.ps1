@@ -1,14 +1,15 @@
 param (
     [Parameter(Mandatory=$true)]
+    [string]$user,
+    [Parameter(Mandatory=$true)]
     [string]$vpsIp
 )
 
-$SSH_INFO="administrator@$vpsIp"
-$BASE_PATH="C:\Users\Administrator"
-# ssh administrator@103.12.76.43 "powershell -ExecutionPolicy Bypass -File C:\Users\Administrator\setup-vps\package-node.ps1"
+$SSH_INFO="$user@$vpsIp"
+$BASE_PATH="$env:USERPROFILE"
 
 Write-Host "Packaging node on VPS"
-ssh $SSH_INFO "powershell -ExecutionPolicy Bypass -File $BASE_PATH\setup-vps\package-node.ps1"
+ssh $SSH_INFO "powershell -ExecutionPolicy Bypass -File $BASE_PATH\setup-vps\utils\package-node.ps1"
 
 Write-Host "Copying VPS node to local"
 scp ${SSH_INFO}:\node.zip . 
@@ -26,7 +27,7 @@ Write-Host "Starting Myst Launcher"
 Start-Process -FilePath "C:\Program Files\Mysterium Launcher\myst-launcher-amd64.exe"
 
 Write-Host "Init new node on VPS"
-ssh $SSH_INFO "powershell -ExecutionPolicy Bypass -File $BASE_PATH\setup-vps\init-node.ps1"
+ssh $SSH_INFO "powershell -ExecutionPolicy Bypass -File $BASE_PATH\setup-vps\utils\init-node.ps1"
 
 Write-Host "Done"
 Write-Host "Config new node on VPS at: http://$vpsIp:4449"

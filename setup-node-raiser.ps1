@@ -22,9 +22,9 @@ git clone https://github.com/Minh-s-org/setup-vps.git
 
 Write-Host "Preparing VPS..."
 Set-Location .\setup-vps
-.\setup-ssh-server.ps1
+.\utils\setup-ssh-server.ps1
 
-.\setup-vps-pass.ps1
+.\utils\setup-vps-pass.ps1
 
 Write-Host "Installing Myst Launcher-x64..."
 Set-Location ~

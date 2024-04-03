@@ -1,4 +1,4 @@
-$BASE_PATH="C:\Users\Administrator"
+$BASE_PATH="$env:USERPROFILE"
 
 Set-Location $BASE_PATH
 

@@ -1,4 +1,4 @@
-$PATH="C:\Users\Administrator"
+$PATH="$env:USERPROFILE"
 $ZIP_PATH="$PATH\node.zip"
 
 Stop-Process -Name *myst* -Force
