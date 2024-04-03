@@ -18,7 +18,7 @@ Write-Host "Stoping Myst Launcher"
 Stop-Process -Name *myst* -Force
 
 Write-Host "Removing old node"
-Remove-Item -Path .\.mysterium-node,.\.myst_node_launcher,.\.mysterium-bin -Force -Recurse -ErrorAction SilentlyContinue
+Remove-Item -Path $env:USERPROFILE\.mysterium-node,$env:USERPROFILE\.myst_node_launcher,$env:USERPROFILE\.mysterium-bin -Force -Recurse -ErrorAction SilentlyContinue
 
 Write-Host "Extract new node"
 Expand-Archive -Path node.zip -DestinationPath .
