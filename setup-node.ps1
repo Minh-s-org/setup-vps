@@ -1,33 +1,29 @@
 param (
     [Parameter(Mandatory=$true)]
-    [string]$user,
-    [Parameter(Mandatory=$true)]
-    [string]$vpsIp
+    [string]$pass
 )
 
-$SSH_INFO="$user@$vpsIp"
-$BASE_PATH="C:\\Users\\$user"
+Write-Host "Enabling Windows developer mode..."
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock" /t REG_DWORD /f /v "AllowDevelopmentWithoutDevLicense" /d "1"
 
-Write-Host "Packaging node on VPS"
-ssh $SSH_INFO "powershell -ExecutionPolicy Bypass -File $BASE_PATH\\setup-vps\\utils\\package-node.ps1"
+Write-Host "Installing chocolatey..."
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1
 
-Write-Host "Copying VPS node to local"
-scp ${SSH_INFO}:$BASE_PATH\node.zip . 
+Write-Host "Installing git..."
+choco install git.install -y --force
+refreshenv
 
-Write-Host "Stoping Myst Launcher"
-Stop-Process -Name *myst* -Force
+Write-Host "Installing 7z..."
+choco install 7zip.install -y --force
+refreshenv
 
-Write-Host "Removing old node"
-Remove-Item -Path .\.mysterium-node,.\.myst_node_launcher,.\.mysterium-bin -Force -Recurse -ErrorAction SilentlyContinue
+git clone https://github.com/Minh-s-org/setup-vps.git
 
-Write-Host "Extract new node"
-Expand-Archive -Path node.zip -DestinationPath .
+Write-Host "Installing SSH..."
+Add-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0
+Set-Service ssh-agent -StartupType Manual
+Start-Service ssh-agent
+Set-Service ssh-agent -StartupType Automatic
 
-Write-Host "Starting Myst Launcher"
-Start-Process -FilePath "C:\Program Files\Mysterium Launcher\myst-launcher-amd64.exe"
-
-Write-Host "Init new node on VPS"
-ssh $SSH_INFO "powershell -ExecutionPolicy Bypass -File $BASE_PATH\\setup-vps\\utils\\init-node.ps1"
-
-Write-Host "Done"
-Write-Host "Config new node on VPS at: http://$vpsIp:4449"
+Write-Host "Node already"
