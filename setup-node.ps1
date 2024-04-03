@@ -6,13 +6,13 @@ param (
 )
 
 $SSH_INFO="$user@$vpsIp"
-$BASE_PATH="$env:USERPROFILE"
+$BASE_PATH="C:\\Users\\$user"
 
 Write-Host "Packaging node on VPS"
-ssh $SSH_INFO "powershell -ExecutionPolicy Bypass -File $BASE_PATH\setup-vps\utils\package-node.ps1"
+ssh $SSH_INFO "powershell -ExecutionPolicy Bypass -File $BASE_PATH\\setup-vps\\utils\\package-node.ps1"
 
 Write-Host "Copying VPS node to local"
-scp ${SSH_INFO}:\node.zip . 
+scp ${SSH_INFO}:$BASE_PATH\node.zip . 
 
 Write-Host "Stoping Myst Launcher"
 Stop-Process -Name *myst* -Force
@@ -27,7 +27,7 @@ Write-Host "Starting Myst Launcher"
 Start-Process -FilePath "C:\Program Files\Mysterium Launcher\myst-launcher-amd64.exe"
 
 Write-Host "Init new node on VPS"
-ssh $SSH_INFO "powershell -ExecutionPolicy Bypass -File $BASE_PATH\setup-vps\utils\init-node.ps1"
+ssh $SSH_INFO "powershell -ExecutionPolicy Bypass -File $BASE_PATH\\setup-vps\\utils\\init-node.ps1"
 
 Write-Host "Done"
 Write-Host "Config new node on VPS at: http://$vpsIp:4449"
