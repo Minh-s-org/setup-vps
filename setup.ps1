@@ -46,6 +46,7 @@ ssh-add .\.ssh\.id_rsa
 
 Set-Location .\Desktop
 git clone git@github.com:Minh-s-org/mysterium-tool.git
+git clone git@github.com:Minh-s-org/myst-chrome-extension.git
 
 Set-Location .\mysterium-tool
 pip install -r requirements.txt
