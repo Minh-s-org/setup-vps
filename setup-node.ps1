@@ -1,8 +1,3 @@
-param (
-    [Parameter(Mandatory=$true)]
-    [string]$pass
-)
-
 Write-Host "Enabling Windows developer mode..."
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock" /t REG_DWORD /f /v "AllowDevelopmentWithoutDevLicense" /d "1"
 
