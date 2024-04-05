@@ -19,6 +19,7 @@ Invoke-SSHCommand -Command "powershell -ExecutionPolicy Bypass -File $BASE_PATH\
 Remove-SSHSession -Session $sessionId
 
 Write-Host "Copying VPS node to local"
+Remove-Item "$env:USERPROFILE\node.zip" -Force
 Get-SCPItem -ComputerName $vpsIp -Credential $credential -Path "C:\Users\$user\node.zip" -PathType File -Destination ./
 
 Write-Host "Stoping Myst Launcher"
