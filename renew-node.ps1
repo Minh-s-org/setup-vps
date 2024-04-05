@@ -2,17 +2,24 @@ param (
     [Parameter(Mandatory=$true)]
     [string]$user,
     [Parameter(Mandatory=$true)]
-    [string]$vpsIp
+    [string]$vpsIp,
+    [Parameter(Mandatory=$true)]
+    [string]$pass
 )
 
-$SSH_INFO="$user@$vpsIp"
 $BASE_PATH="C:\\Users\\$user"
 
+$secpasswd = ConvertTo-SecureString $password -AsPlainText -Force
+$credential = New-Object System.Management.Automation.PSCredential ($username, $secpasswd)
+
 Write-Host "Packaging node on VPS"
-ssh $SSH_INFO "powershell -ExecutionPolicy Bypass -File $BASE_PATH\\setup-vps\\utils\\package-node.ps1"
+$session = New-SSHSession -ComputerName $server -Credential $credential -AcceptKey
+$sessionId = $session.SessionId 
+Invoke-SSHCommand -Command "powershell -ExecutionPolicy Bypass -File $BASE_PATH\\setup-vps\\utils\\package-node.ps1" -SessionId $sessionId
+Remove-SSHSession -Session $sessionId
 
 Write-Host "Copying VPS node to local"
-scp ${SSH_INFO}:$BASE_PATH\node.zip . 
+Get-SCPItem -ComputerName $server -Credential $credential -Path "C:\Users\$user\node.zip" -PathType File -Destination ./
 
 Write-Host "Stoping Myst Launcher"
 Stop-Process -Name *myst* -Force
@@ -27,8 +34,11 @@ Write-Host "Starting Myst Launcher"
 Start-Process -FilePath "C:\Program Files\Mysterium Launcher\myst-launcher-amd64.exe"
 
 Write-Host "Init new node on VPS"
-ssh $SSH_INFO "powershell -ExecutionPolicy Bypass -File $BASE_PATH\\setup-vps\\utils\\init-node.ps1"
+$session = New-SSHSession -ComputerName $server -Credential $credential -AcceptKey
+$sessionId = $session.SessionId 
+Invoke-SSHCommand -Command "powershell -ExecutionPolicy Bypass -File $BASE_PATH\\setup-vps\\utils\\init-node.ps1" -SessionId $sessionId
+Remove-SSHSession -Session $sessionId
 
 Write-Host "Done"
 $hostname="$vpsIp"
-Write-Host "Config new node on VPS at: http://$hostname\:4449"
+Write-Host "Config new node on VPS at: http://$hostname :4449"
