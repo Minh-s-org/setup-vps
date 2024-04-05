@@ -9,7 +9,7 @@ param (
 
 $BASE_PATH="C:\\Users\\$user"
 
-$secpasswd = ConvertTo-SecureString $password -AsPlainText -Force
+$secpasswd = ConvertTo-SecureString $pass -AsPlainText -Force
 $credential = New-Object System.Management.Automation.PSCredential ($username, $secpasswd)
 
 Write-Host "Packaging node on VPS"
